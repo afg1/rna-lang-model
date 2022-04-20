@@ -1,0 +1,13 @@
+name: build-rna-lm-container
+on: [push]
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        activate-environment: lang-model
+        environment-file: environment.yml
+        auto-activate-base: false
