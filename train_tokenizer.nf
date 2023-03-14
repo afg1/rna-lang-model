@@ -1,9 +1,6 @@
 process download_fasta {
     queue 'short'
      
-    input:
-        val(_flag)
-
     output:
         path("*.fasta")
 
