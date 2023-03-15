@@ -18,7 +18,7 @@ def cli():
 @click.argument("output_path")
 def main(input_fasta, output_path):
     print("Training tokenizer with chunks of 100k sequences")
-    f_loader = FASTALoader(input_fasta, limit=100_000)
+    f_loader = FASTALoader(input_fasta)
 
     tokenizer = Tokenizer(WordPiece(unk_token="[UNK]"))
 
@@ -28,7 +28,7 @@ def main(input_fasta, output_path):
     )
 
     print("Training loop begins...")
-    tokenizer.train_from_iterator(f_loader, trainer)
+    tokenizer.train_from_iterator(f_loader.get_some(n=100_000), trainer, len=len(f_loader))
 
     print("Finished!")
     tokenizer.save(output_path + "rna_tok", pretty=True)
