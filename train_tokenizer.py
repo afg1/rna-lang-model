@@ -28,7 +28,7 @@ def main(input_fasta, output_path):
     )
 
     print("Training loop begins...")
-    tokenizer.train_from_iterator(f_loader.get_some(n=100_000), trainer, len=len(f_loader))
+    tokenizer.train_from_iterator(f_loader.get_some(n=100_000), trainer, length=len(f_loader))
 
     print("Finished!")
     tokenizer.save(output_path + "rna_tok", pretty=True)
