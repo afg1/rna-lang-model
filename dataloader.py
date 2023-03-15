@@ -17,28 +17,34 @@ import io
 from Bio import SeqIO
 
 class FASTALoader():
-    def __init__(self, fasta_path, limit=10_000):
+    def __init__(self, fasta_path):
         self.fasta_path = fasta_path
-        self.parser = SeqIO.parse(fasta_path, "fasta")
-
+        print("Indexing FASTA file, may take a while...")
+        self.record_dict = SeqIO.index(fasta_path, "fasta")
+        self.iterator = iter(self.record_dict.items())
+    
+    def __len__(self):
+        return len(self.record_dict)
+    
     def __next__(self) -> str:
-        seq = next(self.parser)
+        _id, seq = next(self.iterator)
 
         # Here we see if we can augment the sequence or something...
 
 
-        return seq.seq
+        return str(seq.seq)
 
     def __iter__(self):
         return self
 
 
     def get_some(self, n=100_000):
-        ret_list = []
-        for i in range(n):
-            ret_list.append(next(self))
+        for i in range(0, len(self), n):
+            ret_list = []
+            for i in range(n):
+                ret_list.append(next(self))
 
-        return ret_list
+            yield ret_list
 
 if __name__ == "__main__":
     # t = FASTALoader("../../data/rnacentral_active.fasta")
@@ -49,3 +55,4 @@ if __name__ == "__main__":
     parser = FASTALoader("test.fasta")
 
     print(next(parser))
+    print(parser.get_some(n=3))
