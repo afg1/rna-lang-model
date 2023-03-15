@@ -23,7 +23,7 @@ process train_tokenizer {
         path("rna_tok*")
 
     """
-    train_tokenizer.py train $fasta rna_tok
+    train_tokenizer.py $fasta rna_tok
     """
 }
 
