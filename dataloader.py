@@ -42,7 +42,10 @@ class FASTALoader():
         for i in range(0, len(self), n):
             ret_list = []
             for i in range(n):
-                ret_list.append(next(self))
+                try:
+                    ret_list.append(next(self))
+                except StopIteration:
+                    break
 
             yield ret_list
 
