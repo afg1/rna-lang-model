@@ -3,6 +3,7 @@ from dataloader import FASTALoader
 
 from tokenizers import ByteLevelBPETokenizer
 from tokenizers import Tokenizer
+from tokenizers.normalizers import Lowercase
 from tokenizers.models import WordPiece
 from tokenizers.trainers import WordPieceTrainer
 import click
@@ -21,10 +22,11 @@ def main(input_fasta, output_path):
     f_loader = FASTALoader(input_fasta)
 
     tokenizer = Tokenizer(WordPiece(unk_token="[UNK]"))
+    tokenizer.normalizer=Lowercase()
 
-    print("Using WordPiece tokenixer with vocab size 16k")
+    print("Using WordPiece tokenixer with vocab size 32k")
     trainer = WordPieceTrainer(
-    vocab_size=16_384, special_tokens=["[UNK]", "[CLS]", "[SEP]", "[PAD]", "[MASK]"]
+    vocab_size=32_000, special_tokens=["[UNK]", "[CLS]", "[SEP]", "[PAD]", "[MASK]"]
     )
 
     print("Training loop begins...")
