@@ -13,7 +13,6 @@ Given this is FASTA, I think there will be some sequences with N in. These can
 either be discarded, or used to randomly augment by replacing with a random
 base.
  """
-import io
 from Bio import SeqIO
 
 class FASTALoader():
@@ -22,7 +21,7 @@ class FASTALoader():
         print("Indexing FASTA file, may take a while...")
         self.record_dict = SeqIO.index(fasta_path, "fasta")
         self.iterator = iter(self.record_dict.items())
-    
+        print("Indexing done, ready to load")
     def __len__(self):
         return len(self.record_dict)
     
@@ -32,7 +31,7 @@ class FASTALoader():
         # Here we see if we can augment the sequence or something...
 
 
-        return str(seq.seq)
+        return str(seq.seq).upper()
 
     def __iter__(self):
         return self
