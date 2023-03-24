@@ -1,0 +1,19 @@
+#SBATCH -t 1440
+#SBATCH --mem=16G
+#SBATCH --gres=gpu
+#SBATCH --mail-type=END
+#SBATCH -J "Train MLM model"
+#SBATCH -o output_mlm
+#SBATCH -e err_mlm
+
+
+singularity exec --nv singularity/lang_modeling.sif ./train_mlm_model.py \
+                                                    --tokenizer simple \
+                                                    --fasta_file test.fasta \
+                                                    --mlm_prob 0.2 \
+                                                    --context_size 512 \
+                                                    --output_dir ./test_run \
+                                                    --use_fp16 \
+                                                    --num_epochs 1
+                                                    --batch_size 32 \
+                                                    --seed 42
