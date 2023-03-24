@@ -1,3 +1,4 @@
+!/usr/bin/env bash
 #SBATCH -t 1440
 #SBATCH --mem=16G
 #SBATCH --gres=gpu
