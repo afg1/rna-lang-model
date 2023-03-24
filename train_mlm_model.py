@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from transformers import DistilBertConfig, DistilBertForMaskedLM
 from transformers import DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
