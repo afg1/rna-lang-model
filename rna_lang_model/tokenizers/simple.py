@@ -14,6 +14,11 @@ def get_tokenizer():
     simple = tokenizers.Tokenizer(tokenizers.models.BPE(vocab={"a": 0, "t": 1, "g": 2, "c": 3, "n": 4, "[UNK]": 5, "[MASK]":6, "[PAD]": 7, "[CLS]":8, "[SEP]":9}, merges=[], unk_token="[UNK]"))
     simple.normalizer = Lowercase()
     simple.decoder = BPEDecoder()
+    simple.post_processor = TemplateProcessing(
+        single="[CLS] $0 [SEP]",
+        pair="[CLS] $A [SEP] $B:1 [SEP]:1",
+        special_tokens=[("[CLS]", 1), ("[SEP]", 0)],
+    )
 
     f_tokenizer = PreTrainedTokenizerFast(tokenizer_object=simple, unk_token="[UNK]")
     f_tokenizer.mask_token = "[MASK]"
@@ -27,4 +32,5 @@ def get_tokenizer():
 
 if __name__ == "__main__":
     t = get_tokenizer()
+    t.save_pretrained("simple_tokenizer")
     print(t("aaaa"))
