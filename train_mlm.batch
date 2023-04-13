@@ -12,7 +12,7 @@ singularity exec --nv singularity/lang_modeling.sif ./train_mlm_model.py \
                                                     --tokenizer simple \
                                                     --fasta_file test.fasta \
                                                     --mlm_prob 0.2 \
-                                                    --context_size 512 \
+                                                    --context_size 32768 \
                                                     --output_dir ./test_run \
                                                     --use_fp16 \
                                                     --num_epochs 1 \
